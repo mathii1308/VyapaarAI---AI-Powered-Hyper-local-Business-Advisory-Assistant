@@ -69,11 +69,14 @@ public class ChatService {
         // Strategy Context for LLM
         StringBuilder strategyContext = new StringBuilder();
         if (strategyEval != null && strategyEval.containsKey("topStrategy")) {
-            Map top = (Map) strategyEval.get("topStrategy");
-            strategyContext.append("=== DETERMINISTIC STRATEGY EVALUATION ===\n");
-            strategyContext.append("Top Recommended Strategy: ").append(top.get("name")).append(" (Score: ").append(top.get("viabilityScore")).append("/100 - ").append(top.get("tier")).append(")\n");
-            strategyContext.append("Summary: ").append(top.get("summary")).append("\n");
-            strategyContext.append("Action Plan Steps: ").append(top.get("actionSteps")).append("\n\n");
+            @SuppressWarnings("unchecked")
+            Map<String, Object> top = (Map<String, Object>) strategyEval.get("topStrategy");
+            if (top != null) {
+                strategyContext.append("=== DETERMINISTIC STRATEGY EVALUATION ===\n");
+                strategyContext.append("Top Recommended Strategy: ").append(top.get("name")).append(" (Score: ").append(top.get("viabilityScore")).append("/100 - ").append(top.get("tier")).append(")\n");
+                strategyContext.append("Summary: ").append(top.get("summary")).append("\n");
+                strategyContext.append("Action Plan Steps: ").append(top.get("actionSteps")).append("\n\n");
+            }
         }
 
         String combinedToolContext = (strategyContext.toString() + kbContext.toString()).trim();

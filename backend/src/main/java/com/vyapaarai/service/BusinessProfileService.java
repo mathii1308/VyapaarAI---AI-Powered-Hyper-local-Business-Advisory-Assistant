@@ -43,6 +43,7 @@ public class BusinessProfileService {
 
     @Transactional(readOnly = true)
     public BusinessProfileResponseDTO getProfileById(Long id) {
+        java.util.Objects.requireNonNull(id, "ID must not be null");
         BusinessProfile profile = repository.findById(id)
                 .orElseThrow(() -> new com.vyapaarai.exception.ResourceNotFoundException("Business profile not found with ID: " + id));
         return BusinessProfileResponseDTO.fromEntity(profile);

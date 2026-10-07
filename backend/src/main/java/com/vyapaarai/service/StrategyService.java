@@ -20,7 +20,6 @@ public class StrategyService {
         double netProfit = p.getNetMonthlyProfit() != null ? p.getNetMonthlyProfit() : 0.0;
         double profitMargin = p.getProfitMarginPercent() != null ? p.getProfitMarginPercent() : 0.0;
         double investment = p.getAvailableInvestment() != null ? p.getAvailableInvestment() : 0.0;
-        double expenses = p.getMonthlyExpenses() != null ? p.getMonthlyExpenses() : 0.0;
         Double dscr = p.getDebtServiceCoverageRatio();
         boolean isDebtFree = Boolean.TRUE.equals(p.getIsDebtFree());
         int healthScore = p.getFinancialHealthScore() != null ? p.getFinancialHealthScore() : 50;

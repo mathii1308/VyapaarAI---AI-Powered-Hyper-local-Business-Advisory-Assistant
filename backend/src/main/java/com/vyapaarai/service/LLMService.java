@@ -168,17 +168,28 @@ public class LLMService {
         requestBody.put("contents", contents);
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
-        ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<Map> response = restTemplate.exchange(url, java.util.Objects.requireNonNull(HttpMethod.POST), entity, Map.class);
 
-        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-            List candidates = (List) response.getBody().get("candidates");
+        Map<?, ?> responseBody = response.getBody();
+        if (response.getStatusCode() == HttpStatus.OK && responseBody != null) {
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> candidates = (List<Map<String, Object>>) responseBody.get("candidates");
             if (candidates != null && !candidates.isEmpty()) {
-                Map candidate = (Map) candidates.get(0);
-                Map content = (Map) candidate.get("content");
-                List parts = (List) content.get("parts");
-                if (parts != null && !parts.isEmpty()) {
-                    Map part = (Map) parts.get(0);
-                    return (String) part.get("text");
+                Map<String, Object> candidate = candidates.get(0);
+                if (candidate != null) {
+                    @SuppressWarnings("unchecked")
+                    Map<String, Object> content = (Map<String, Object>) candidate.get("content");
+                    if (content != null) {
+                        @SuppressWarnings("unchecked")
+                        List<Map<String, Object>> parts = (List<Map<String, Object>>) content.get("parts");
+                        if (parts != null && !parts.isEmpty()) {
+                            Map<String, Object> part = parts.get(0);
+                            if (part != null) {
+                                return (String) part.get("text");
+                            }
+                        }
+                    }
                 }
             }
         }
