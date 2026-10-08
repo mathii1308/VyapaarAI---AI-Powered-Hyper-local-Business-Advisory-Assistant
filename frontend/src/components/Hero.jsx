@@ -22,11 +22,11 @@ export default function Hero({ onGetStarted }) {
 
       <div className="cta-group">
         <button className="btn-primary" onClick={onGetStarted}>
-          <span>Get Started</span>
+          <span>Create Business Profile</span>
           <span>→</span>
         </button>
-        <a href="#health" className="btn-secondary">
-          <span>View Backend API Status</span>
+        <a href="#how-it-works" className="btn-secondary">
+          <span>How It Works</span>
         </a>
       </div>
     </section>

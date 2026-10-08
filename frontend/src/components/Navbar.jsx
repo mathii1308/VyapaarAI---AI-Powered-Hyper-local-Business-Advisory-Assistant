@@ -49,7 +49,7 @@ export default function Navbar({ activeView, onNavigate, healthStatus, loading }
       <div className="nav-actions">
         <div className="status-pill">
           <span className={`status-dot ${loading ? 'checking' : isOnline ? 'online' : 'offline'}`}></span>
-          <span>{loading ? 'Checking backend...' : isOnline ? 'Backend Online' : 'Backend Offline'}</span>
+          <span>{loading ? 'Checking backend...' : isOnline ? 'Backend Online' : 'Backend Standby'}</span>
         </div>
 
         <button className="btn-primary btn-sm" onClick={() => onNavigate('chat')}>

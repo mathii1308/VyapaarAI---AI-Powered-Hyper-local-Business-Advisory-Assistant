@@ -99,13 +99,6 @@ export default function LandingPage() {
         {activeView === 'landing' && (
           <>
             <Hero onGetStarted={() => handleNavigate('profile')} />
-            <div className="section-container">
-              <HealthCard 
-                healthStatus={healthStatus} 
-                loading={loading} 
-                onRefresh={checkHealth} 
-              />
-            </div>
             <ProblemSection onGetStarted={() => handleNavigate('profile')} />
             <HowItWorks />
             <CapabilitiesSection />

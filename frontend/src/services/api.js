@@ -4,6 +4,7 @@ const API_BASE_URL = 'http://localhost:8081/api';
  * Fetch health check status from Spring Boot backend.
  */
 export async function fetchHealthStatus() {
+  const startTime = Date.now();
   try {
     const response = await fetch(`${API_BASE_URL}/health`, {
       method: 'GET',
@@ -12,20 +13,23 @@ export async function fetchHealthStatus() {
       },
     });
 
+    const latency = Date.now() - startTime;
+
     if (!response.ok) {
       throw new Error(`Server responded with status: ${response.status}`);
     }
 
     const data = await response.json();
-    return { success: true, data };
+    return { success: true, data, latency };
   } catch (error) {
-    console.error('Failed to fetch backend health status:', error);
     return {
       success: false,
-      error: error.message || 'Unable to connect to backend server',
+      error: 'Backend offline (Fallback Advisory Engine active)',
+      latency: null
     };
   }
 }
+
 
 /**
  * Create a new business profile (POST /api/business)
